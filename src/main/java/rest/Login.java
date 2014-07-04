@@ -79,7 +79,12 @@ public class Login {
         return true;
     }
 
-    public void setAllUsers(UserRepository allUsers) {
+    public Login() {
+
+    }
+
+    public Login(UserRepository allUsers) {
         this.allUsers = allUsers;
     }
+
 }

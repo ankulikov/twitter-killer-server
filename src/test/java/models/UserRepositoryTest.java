@@ -1,6 +1,7 @@
 package models;
 import domain.entity.User;
 import domain.repository.UserRepository;
+import org.junit.Ignore;
 import org.junit.Test;
 import rest.Login;
 
@@ -12,7 +13,7 @@ import static org.mockito.Mockito.*;
 public class UserRepositoryTest {
 
     @Test
-    public void saveInUserRepositoryVerifyTest(){
+    public void saveInUserRepositoryVerifyTest() {
         UserRepository sut = mock(UserRepository.class);
         String dummyName = "Vasiliy";
         String dummyPassword = "12345678";
@@ -22,11 +23,16 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void getByLoginInUserRepositoryVerifyTest(){
+    public void getByLoginInUserRepositoryVerifyTest() {
         UserRepository sut = mock(UserRepository.class);
         String dummyName = "Vasiliy";
         sut.getByLogin(dummyName);
         verify(sut).getByLogin(dummyName);
+    }
+
+    @Ignore
+    @Test
+    public void getByLoginBindingTest() {
     }
 
 
