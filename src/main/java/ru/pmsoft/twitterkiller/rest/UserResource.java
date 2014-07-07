@@ -1,7 +1,6 @@
 package ru.pmsoft.twitterkiller.rest;
 
-import ru.pmsoft.twitterkiller.domain.dataaccess.DbUserRepository;
-import ru.pmsoft.twitterkiller.domain.dto.TokenOutput;
+import ru.pmsoft.twitterkiller.domain.dto.Token;
 import ru.pmsoft.twitterkiller.domain.entity.User;
 import ru.pmsoft.twitterkiller.domain.repository.UserRepository;
 import ru.pmsoft.twitterkiller.domain.util.UserUtil;
@@ -60,13 +59,13 @@ public class UserResource {
         if (!user.checkPassword(password))
             throw new ClientException(Status.UNAUTHORIZED, "Password is not correct");
         //если токена не было или он просрочен, то генерируем новый
-        if (user.getToken() == null || user.getExpiration() == null || user.getExpiration().before(new Date())) {
-            user.setToken(UserUtil.generateToken());
-            user.setExpiration(UserUtil.computeExpiration(TimeUnit.DAYS, 1));
+        if (user.getToken() == null || user.getToken().getExpiration() == null || user.getToken().getExpiration().before(new Date())) {
+            user.getToken().setToken(UserUtil.generateToken());
+            user.getToken().setExpiration(UserUtil.computeExpiration(TimeUnit.DAYS, 1));
             //Обновляем пользователя в БД
             repository.save(user);
         }
-        return Response.status(200).entity(new TokenOutput(user.getToken(), user.getExpiration())).build();
+        return Response.status(200).entity(new Token(user.getToken().getToken(), user.getToken().getExpiration())).build();
     }
 
     @POST

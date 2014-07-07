@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import ru.pmsoft.twitterkiller.domain.dto.TokenOutput;
+import ru.pmsoft.twitterkiller.domain.dto.Token;
 import ru.pmsoft.twitterkiller.domain.entity.User;
 import ru.pmsoft.twitterkiller.domain.repository.InMemoryUserRepository;
 import ru.pmsoft.twitterkiller.domain.repository.UserRepository;
@@ -68,7 +68,7 @@ public class UserResourceTest extends TestCase {
         {
              UserRepository hashrep = new InMemoryUserRepository();
              User dummy = new User("user", "password");
-             dummy.setExpiration(new Date());
+             dummy.getToken().setExpiration(new Date());
              hashrep.save(dummy);
              UserResource sut = new UserResource(hashrep);
              assertEquals(sut.authentication("user", "0"), new ClientException(Response.Status.BAD_REQUEST, "Password is not correct").getMessage());
@@ -86,24 +86,24 @@ public class UserResourceTest extends TestCase {
         Calendar calendar  = Calendar.getInstance();
         calendar.setTime(new Date());
         calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR) - 1);
-        dummy.setExpiration(calendar.getTime());
+        dummy.getToken().setExpiration(calendar.getTime());
         hashrep.save(dummy);
         UserResource sut = new UserResource(hashrep);
         sut.authentication("user", "password");
-        Date expiration = dummy.getExpiration();
+        Date expiration = dummy.getToken().getExpiration();
         assertNotSame(calendar.getTime(), expiration);
     }
     @Test
     public void testAuthentication_hasToReturnJSONwithExpirationAndToken() throws Exception {
         UserRepository hashrep = new InMemoryUserRepository();
         User dummy = new User("user", "password");
-        dummy.setExpiration(new Date());
+        dummy.getToken().setExpiration(new Date());
         hashrep.save(dummy);
         UserResource sut = new UserResource(hashrep);
         Response resp =  sut.authentication("user", "password");
-        TokenOutput token = (TokenOutput)resp.getEntity();
-        assertEquals(dummy.getToken(), token.getToken());
-        assertEquals(dummy.getExpiration(), token.getExpiration());
+        Token token = (Token)resp.getEntity();
+        assertEquals(dummy.getToken().getToken(), token.getToken());
+        assertEquals(dummy.getToken().getExpiration(), token.getExpiration());
     }
 
 

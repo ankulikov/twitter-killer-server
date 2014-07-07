@@ -1,6 +1,7 @@
 package ru.pmsoft.twitterkiller.domain.entity;
 
 import org.hibernate.annotations.Table;
+import ru.pmsoft.twitterkiller.domain.dto.Token;
 import ru.pmsoft.twitterkiller.domain.util.UserUtil;
 
 import javax.persistence.Entity;
@@ -16,8 +17,7 @@ public class User implements Serializable{
     private String passwordHash;
     private String salt;
     private int id;
-    private String token;
-    private Date expiration;
+    private Token token;
 
 
     private User() { }
@@ -27,6 +27,7 @@ public class User implements Serializable{
         this.login = login;
         salt = UserUtil.generateSalt();
         this.passwordHash = UserUtil.getSHA256(password, salt);
+        token = new Token(UserUtil.generateToken(), UserUtil.computeExpiration(TimeUnit.DAYS, 1));
        // token = UserUtil.generateToken();
        // setExpiration(UserUtil.computeExpiration(TimeUnit.DAYS, 1));
     }
@@ -68,21 +69,14 @@ public class User implements Serializable{
         this.id = id;
     }
 
-    public String getToken() {
+    public Token getToken() {
         return token;
     }
 
-    public void setToken(String token) {
+    public void setToken(Token token) {
         this.token = token;
     }
 
-    public Date getExpiration() {
-        return expiration;
-    }
-
-    public void setExpiration(Date expiration) {
-        this.expiration = expiration;
-    }
 
     //public void addTwitt (Twitt twitt)
     //{

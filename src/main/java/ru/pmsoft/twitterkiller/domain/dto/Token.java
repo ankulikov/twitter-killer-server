@@ -8,17 +8,29 @@ import java.util.Date;
 /**
  * Created by Андрей on 05.07.2014.
  */
-public class TokenOutput {
-    private String token;
+public class Token {
+
+
+
+
+    private String value;
     private Date expiration;
 
-    public TokenOutput(String token, Date expiration) {
-        this.token = token;
+    public Token(String value, Date expiration) {
+        this.value = value;
         this.expiration = expiration;
     }
 
     public String getToken() {
-        return token;
+        return value;
+    }
+
+    public void setToken(String value) {
+        this.value = value;
+    }
+
+    public void setExpiration(Date expiration) {
+        this.expiration = expiration;
     }
 
     @JsonSerialize(using = JsonDateSerializer.class)
