@@ -1,6 +1,7 @@
-package ru.pmsoft.twitterkiller.domain.repository;
+package ru.pmsoft.twitterkiller.rest;
 
 import ru.pmsoft.twitterkiller.domain.entity.User;
+import ru.pmsoft.twitterkiller.domain.repository.UserRepository;
 
 import java.util.HashMap;
 

@@ -25,17 +25,12 @@ public class HibernateUtil {
             System.err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
         }
+        finally {
+            sessionFactory.close();
+        }
     }
 
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }
-
-    public static void shutdown() {
-        // Чистит кеш и закрывает соединение с БД
-        getSessionFactory().close();
-    }
-
-
-
 }

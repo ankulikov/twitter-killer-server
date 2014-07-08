@@ -3,7 +3,7 @@ package ru.pmsoft.twitterkiller.domain.entity;
 /**
  * Created by Александра on 07.07.14.
  */
-public class Twitt {
+public class Twit {
     public int getId() {
         return id;
     }
@@ -22,7 +22,7 @@ public class Twitt {
 
     private int id;
     private String message;
-    private Twitt(){}
-    public Twitt (int id, String message) {this.id = id; this.message = message;}
+    private Twit(){}
+    public Twit(int id, String message) {this.id = id; this.message = message;}
 
 }

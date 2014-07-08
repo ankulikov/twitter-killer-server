@@ -8,16 +8,12 @@ import ru.pmsoft.twitterkiller.domain.util.HibernateUtil;
 
 import java.util.List;
 
-/**
- * Created by Anton on 05/07/2014.
- */
 public class DbUserRepository implements UserRepository {
 
     @Override
     public void save(User user) {
 
         Session session = HibernateUtil.getSessionFactory().openSession();
-
         session.beginTransaction();
         session.saveOrUpdate(user);
         session.getTransaction().commit();
@@ -25,12 +21,10 @@ public class DbUserRepository implements UserRepository {
     }
 
     @Override
-    public User getByLogin(String name) {
+    public User getByLogin(String login) {
 
         Session session = HibernateUtil.getSessionFactory().openSession();
-
-        User user = (User) session.createCriteria(User.class).add(Restrictions.eq("login", name)).uniqueResult();
-       // List<User> foundUsers = (List<User>) session.createQuery("select user from User user where user.login = '" + name + "'").list();
+        User user = (User) session.createCriteria(User.class).add(Restrictions.eq("login", login)).uniqueResult();
         session.close();
         return user;
     }
@@ -39,7 +33,6 @@ public class DbUserRepository implements UserRepository {
     public Iterable<User> values() {
 
         Session session = HibernateUtil.getSessionFactory().openSession();
-     //   List<User> foundUsers = (List<User>) session.createQuery("select user from User user").list();
         List<User> foundUsers = (List<User>) session.createCriteria(User.class).list();
         session.close();
         return foundUsers;

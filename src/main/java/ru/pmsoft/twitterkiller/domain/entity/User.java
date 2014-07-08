@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class User implements Serializable{
-    //private List<Twitt> twitts;
+    //private List<Twit> twitts;
     private String login;
     private String passwordHash;
     private String salt;
@@ -23,7 +23,7 @@ public class User implements Serializable{
     private User() { }
 
     public User(String login, String password) {
-        //twitts = new ArrayList<Twitt>();
+        //twitts = new ArrayList<Twit>();
         this.login = login;
         salt = UserUtil.generateSalt();
         this.passwordHash = UserUtil.getSHA256(password, salt);
@@ -78,7 +78,7 @@ public class User implements Serializable{
     }
 
 
-    //public void addTwitt (Twitt twitt)
+    //public void addTwitt (Twit twitt)
     //{
     //    twitts.add(twitt);
     //}
